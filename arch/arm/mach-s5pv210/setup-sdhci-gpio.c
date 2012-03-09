@@ -71,6 +71,12 @@ void s5pv210_setup_sdhci0_cfg_gpio(struct platform_device *dev, int width)
 		gpio_direction_output(S5PV210_GPJ2(7), 1);
 		s3c_gpio_setpull(S5PV210_GPJ2(7), S3C_GPIO_PULL_NONE);
 	}
+
+#ifdef CONFIG_MACH_P1
+	s3c_gpio_cfgpin(S5PV210_GPJ2(7), S3C_GPIO_OUTPUT);
+	s3c_gpio_setpull(S5PV210_GPJ2(7), S3C_GPIO_PULL_NONE);
+	gpio_set_value(S5PV210_GPJ2(7), 1);
+#endif
 }
 
 void s5pv210_setup_sdhci1_cfg_gpio(struct platform_device *dev, int width)
