@@ -799,9 +799,16 @@ bool _s5p_vlayer_set_csc_coef(unsigned long buf_in)
 bool _s5p_vlayer_init_param(unsigned long buf_in)
 {
 	struct s5p_tv_status *st = &s5ptv_status;
+#ifdef CONFIG_MACH_P1
+	struct s5p_vl_param *video = &(s5ptv_status.vl_basic_param);
+#endif
 
 	bool i_mode, o_mode; /* 0 for interlaced, 1 for progressive */
 
+#ifdef CONFIG_MACH_P1
+	u32 s_h = video->src_height;
+	u32 d_h = video->dest_height;
+#endif
 	switch (st->tvout_param.disp_mode) {
 
 	case TVOUT_480P_60_16_9:
@@ -866,6 +873,11 @@ bool _s5p_vlayer_init_param(unsigned long buf_in)
 	} else {
 		/* p to i : line skip 1, ipc 0, auto toggle 0 */
 		if (o_mode == INTERLACED) {
+#ifdef CONFIG_MACH_P1
+			if (d_h > s_h && ((d_h<<16)/s_h < 0x100000))
+				st->vl_op_mode.line_skip = false;
+			else
+#endif
 			st->vl_op_mode.line_skip = true;
 			st->vl2d_ipc		 = false;
 			st->vl_op_mode.toggle_id = false;
