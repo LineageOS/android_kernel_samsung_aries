@@ -131,6 +131,10 @@ EXPORT_SYMBOL(sec_get_param_value);
 
 #define WLAN_SKB_BUF_NUM	16
 
+#if defined CONFIG_USB_S3C_OTG_HOST || defined CONFIG_USB_DWC_OTG
+extern int s3c_gadget_otg_enable(struct usb_gadget *gadget, int enable);
+#endif
+
 static struct sk_buff *wlan_static_skb[WLAN_SKB_BUF_NUM];
 
 struct wifi_mem_prealloc {
@@ -2373,10 +2377,21 @@ static struct i2c_board_info i2c_devs8[] __initdata = {
 	},
 };
 
+#if defined CONFIG_USB_S3C_OTG_HOST || defined CONFIG_USB_DWC_OTG
+static void fsa9480_usb_otg_cb(bool attached)
+{
+	struct usb_gadget *gadget = platform_get_drvdata(&s3c_device_usbgadget);
+	if (gadget)
+		s3c_gadget_otg_enable(gadget, attached);
+
+	if (charger_callbacks && charger_callbacks->set_cable)
+		charger_callbacks->set_cable(charger_callbacks, CABLE_TYPE_NONE);
+}
+#endif
+
 static void fsa9480_usb_cb(bool attached)
 {
 	struct usb_gadget *gadget = platform_get_drvdata(&s3c_device_usbgadget);
-
 	if (gadget) {
 		if (attached)
 			usb_gadget_vbus_connect(gadget);
@@ -2441,6 +2456,9 @@ static void fsa9480_reset_cb(void)
 
 static struct fsa9480_platform_data fsa9480_pdata = {
 	.usb_cb = fsa9480_usb_cb,
+#if defined CONFIG_USB_S3C_OTG_HOST || defined CONFIG_USB_DWC_OTG
+	.usb_otg_cb = fsa9480_usb_otg_cb,
+#endif
 	.charger_cb = fsa9480_charger_cb,
 	.deskdock_cb = fsa9480_deskdock_cb,
 	.cardock_cb = fsa9480_cardock_cb,
@@ -4857,6 +4875,15 @@ static struct platform_device *aries_devices[] __initdata = {
 #if defined (CONFIG_SAMSUNG_CAPTIVATE)
 	&s3c_device_i2c13,
 #endif
+#ifdef CONFIG_USB_ARCH_HAS_EHCI
+	&s3c_device_usb_ehci,
+#endif
+#ifdef CONFIG_USB_ARCH_HAS_OHCI
+	&s3c_device_usb_ohci,
+#endif
+#ifdef CONFIG_USB_S3C_OTG_HOST
+	&s3c_device_usb_otghcd,
+#endif
 #ifdef CONFIG_USB_GADGET
 	&s3c_device_usbgadget,
 #endif
@@ -5334,6 +5361,41 @@ void usb_host_phy_off(void)
 			S5P_USB_PHY_CONTROL);
 }
 EXPORT_SYMBOL(usb_host_phy_off);
+
+#if defined CONFIG_USB_S3C_OTG_HOST || defined CONFIG_USB_DWC_OTG
+/* Initializes OTG Phy */
+void otg_host_phy_init(void)
+{
+	__raw_writel(__raw_readl(S5P_USB_PHY_CONTROL)
+		|(0x1<<0), S5P_USB_PHY_CONTROL); /*USB PHY0 Enable */
+    // from galaxy tab otg host:
+	__raw_writel((__raw_readl(S3C_USBOTG_PHYPWR)
+		&~(0x3<<3)&~(0x1<<0))|(0x1<<5), S3C_USBOTG_PHYPWR);
+
+	__raw_writel((__raw_readl(S3C_USBOTG_PHYCLK)
+		&~(0x1<<4))|(0x7<<0), S3C_USBOTG_PHYCLK);
+
+	__raw_writel((__raw_readl(S3C_USBOTG_RSTCON)
+		&~(0x3<<1))|(0x1<<0), S3C_USBOTG_RSTCON);
+	mdelay(1);
+	__raw_writel((__raw_readl(S3C_USBOTG_RSTCON)
+		&~(0x7<<0)), S3C_USBOTG_RSTCON);
+	mdelay(1);
+
+	__raw_writel((__raw_readl(S3C_UDC_OTG_GUSBCFG)
+		|(0x3<<8)), S3C_UDC_OTG_GUSBCFG);
+
+	printk("otg_host_phy_int : USBPHYCTL=0x%x,PHYPWR=0x%x,PHYCLK=0x%x,USBCFG=0x%x\n",
+		readl(S5P_USB_PHY_CONTROL),
+		readl(S3C_USBOTG_PHYPWR),
+		readl(S3C_USBOTG_PHYCLK),
+		readl(S3C_UDC_OTG_GUSBCFG));
+}
+EXPORT_SYMBOL(otg_host_phy_init);
+
+
+#endif
+
 #endif
 
 MACHINE_START(SMDKC110, "SMDKC110")

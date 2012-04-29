@@ -188,8 +188,14 @@ static bool max8998_check_vdcin(struct chg_data *chg)
 	u8 data = 0;
 	int ret;
 
-	ret = max8998_read_reg(chg->iodev, MAX8998_REG_STATUS2, &data);
+#if defined CONFIG_USB_S3C_OTG_HOST || defined CONFIG_USB_DWC_OTG
+	// if we set status to none cable, return false (we don't wanna be charged)
+	if (chg->cable_status == CABLE_TYPE_NONE) {
+		return false;
+	}
+#endif
 
+	ret = max8998_read_reg(chg->iodev, MAX8998_REG_STATUS2, &data);
 	if (ret < 0) {
 		pr_err("max8998_read_reg error\n");
 		return ret;

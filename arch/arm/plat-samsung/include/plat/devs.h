@@ -101,6 +101,15 @@ extern struct platform_device s3c_device_usb_mass_storage;
 extern struct platform_device s3c_device_rndis;
 extern struct platform_device s3c_device_usb_hsotg;
 
+#ifdef CONFIG_USB_ARCH_HAS_EHCI
+extern struct platform_device s3c_device_usb_ehci;
+#endif
+#ifdef CONFIG_USB_ARCH_HAS_OHCI
+extern struct platform_device s3c_device_usb_ohci;
+#endif
+#ifdef CONFIG_USB_S3C_OTG_HOST
+extern struct platform_device s3c_device_usb_otghcd;
+#endif
 extern struct platform_device s5p_device_rotator;
 extern struct platform_device s5p_device_tvout;
 extern struct platform_device s5p_device_g3d;

@@ -151,6 +151,14 @@ struct usb_hcd {
 	/* The HC driver's private data is stored at the end of
 	 * this structure.
 	 */
+#ifdef CONFIG_USB_HOST_NOTIFY
+        struct host_notify_dev ndev;
+        int host_notify;
+#endif
+#ifdef CONFIG_USB_SEC_WHITELIST
+        int sec_whlist_table_num;
+#endif
+
 	unsigned long hcd_priv[0]
 			__attribute__ ((aligned(sizeof(unsigned long))));
 };

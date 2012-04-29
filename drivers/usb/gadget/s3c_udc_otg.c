@@ -26,6 +26,12 @@
 #include <linux/clk.h>
 #include <mach/map.h>
 #include <plat/regs-otg.h>
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/string.h>
+#include <linux/vmalloc.h>
+#include <linux/proc_fs.h>
+#include <asm/uaccess.h>
 #include <linux/i2c.h>
 #include <linux/regulator/consumer.h>
 #if	defined(CONFIG_USB_GADGET_S3C_OTGD_DMA_MODE) /* DMA mode */
@@ -428,6 +434,40 @@ int s3c_vbus_enable(struct usb_gadget *gadget, int enable)
 
 	return 0;
 }
+
+#if defined CONFIG_USB_S3C_OTG_HOST || defined CONFIG_USB_DWC_OTG
+int s3c_get_drivermode(void)
+{
+	// driver to use: 0: S3C High-speed, 1: S3C Low-speed/Full-speed, 2: DWC
+	return 0;
+}
+EXPORT_SYMBOL(s3c_get_drivermode);
+
+int s3c_gadget_otg_enable(struct usb_gadget *gadget, int enable)
+{
+	struct s3c_udc *dev = the_controller;
+	if (enable) {
+		free_irq(IRQ_OTG, dev);
+		s3c_vbus_enable(gadget, 1);
+#if defined CONFIG_USB_S3C_OTG_HOST
+		return platform_driver_register(&s5pc110_otg_driver);
+#elif defined CONFIG_USB_DWC_OTG
+		return platform_driver_register(&dwc_otg_driver);
+#endif
+	} else {
+		s3c_vbus_enable(gadget, 0);
+#if defined CONFIG_USB_S3C_OTG_HOST
+		platform_driver_unregister(&s5pc110_otg_driver);
+#elif defined CONFIG_USB_DWC_OTG
+		platform_driver_unregister(&dwc_otg_driver);
+#endif
+		return request_irq(IRQ_OTG, s3c_udc_irq, 0, driver_name, dev);
+	}
+	return 0;
+}
+
+EXPORT_SYMBOL(s3c_gadget_otg_enable);
+#endif
 
 /*
  *	done - retire a request; caller blocked irqs
@@ -1212,6 +1252,7 @@ static int s3c_udc_probe(struct platform_device *pdev)
 
 	disable_irq(IRQ_OTG);
 	create_proc_files();
+
 	return retval;
 }
 

@@ -30,6 +30,7 @@ enum {
 struct fsa9480_platform_data {
 	void (*cfg_gpio) (void);
 	void (*usb_cb) (bool attached);
+	void (*usb_otg_cb) (bool attached);
 	void (*uart_cb) (bool attached);
 	void (*charger_cb) (bool attached);
 	void (*jig_cb) (bool attached);

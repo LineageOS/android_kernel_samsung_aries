@@ -142,4 +142,20 @@ extern struct i2c_driver fsa9480_i2c_driver;
 #define ep_index(EP)		((EP)->bEndpointAddress&0xF)
 #define ep_maxpacket(EP)	((EP)->ep.maxpacket)
 
+#if defined(CONFIG_USB_S3C_OTG_HOST) || defined(CONFIG_USB_DWC_OTG)
+#define USB_OTG_DRIVER_S3CHS 1
+#define USB_OTG_DRIVER_S3CFSLS 2
+#define USB_OTG_DRIVER_S3C USB_OTG_DRIVER_S3CHS | USB_OTG_DRIVER_S3CFSLS
+#define USB_OTG_DRIVER_DWC 4
+
+extern int s3c_is_otgmode(void);
+extern int s3c_get_drivermode(void);
+#ifdef CONFIG_USB_S3C_OTG_HOST
+extern struct platform_driver s5pc110_otg_driver;
+#endif
+#ifdef CONFIG_USB_DWC_OTG
+extern struct platform_driver dwc_otg_driver;
+#endif
+#endif // end of CONFIG_USB_S3C_OTG_HOST || CONFIG_USB_DWC_OTG
+
 #endif
