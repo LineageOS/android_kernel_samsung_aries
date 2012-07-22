@@ -15,7 +15,8 @@
 #include <linux/cpufreq.h>
 
 enum perf_level {
-	L0, L1, L2, L3, L4, MAX_PERF_LEVEL = L4,
+	L0, L1, L2, L3, L4, L5,
+	MAX_PERF_LEVEL = L5,
 };
 
 /* For cpu-freq driver */
@@ -41,6 +42,7 @@ enum {
 	DVFS_LOCK_TOKEN_7,	// 	(TOUCH)
 	DVFS_LOCK_TOKEN_8,	// USB
 	DVFS_LOCK_TOKEN_9,	// BT
+	DVFS_LOCK_TOKEN_10,	// PVR
 	DVFS_LOCK_TOKEN_NUM
 };
 
