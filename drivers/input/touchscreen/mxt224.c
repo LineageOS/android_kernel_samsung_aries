@@ -25,6 +25,10 @@
 #include <linux/input/mxt224.h>
 #include <asm/unaligned.h>
 
+#ifdef CONFIG_DVFS_LIMIT
+#include <mach/cpu-freq-v210.h>
+#endif
+
 #define OBJECT_TABLE_START_ADDRESS	7
 #define OBJECT_TABLE_ELEMENT_SIZE	6
 
@@ -41,6 +45,9 @@
 
 // Accidental touch key prevention (see cypress-touchkey.c)
 unsigned int touch_state_val = 0;
+#ifdef CONFIG_DVFS_LIMIT
+unsigned int dvfs_locked = 0;
+#endif
 EXPORT_SYMBOL(touch_state_val);
 
 struct object_t {
@@ -354,6 +361,12 @@ static irqreturn_t mxt224_irq_thread(int irq, void *ptr)
 			data->fingers[id].w = msg[5];
 			data->finger_mask |= 1U << id;
 			touch_state_val = 0;
+#ifdef CONFIG_DVFS_LIMIT
+			if (dvfs_locked) {
+				s5pv210_unlock_dvfs_high_level(DVFS_LOCK_TOKEN_7);
+				dvfs_locked = 0;
+			}
+#endif
 		} else if ((msg[1] & DETECT_MSG_MASK) && (msg[1] &
 				(PRESS_MSG_MASK | MOVE_MSG_MASK))) {
 			data->fingers[id].z = msg[6];
@@ -364,6 +377,12 @@ static irqreturn_t mxt224_irq_thread(int irq, void *ptr)
 					(msg[4] & 0xF)) >> data->y_dropbits;
 			data->finger_mask |= 1U << id;
 			touch_state_val = 1;
+#ifdef CONFIG_DVFS_LIMIT
+			if (!dvfs_locked) {
+				s5pv210_lock_dvfs_high_level(DVFS_LOCK_TOKEN_7, L1);
+				dvfs_locked = 1;
+			}
+#endif
 		} else if ((msg[1] & SUPPRESS_MSG_MASK) &&
 			   (data->fingers[id].z != -1)) {
 			data->fingers[id].z = -1;
