@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAVX//+rY\u003d",
+        "filename": "drivers/media/video/samsung/mfc50/mfc.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 2751
+      },
+      "writtenOn": "2012-07-22T08:19:42Z",
+      "side": 1,
+      "message": "Maybe you have to back it to L2 or you\u0027ll use 200MHz for MFC. Is this your intention?",
+      "revId": "17c6921f5b8ae2a51dbf7c1432ebea938b76b563",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
