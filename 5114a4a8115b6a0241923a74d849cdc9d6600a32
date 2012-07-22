@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAVX//+rw\u003d",
+        "filename": "arch/arm/mach-s5pv210/cpufreq.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 2751
+      },
+      "writtenOn": "2012-07-22T07:57:42Z",
+      "side": 1,
+      "message": "IMHO, change L0 to another variable name i.e. \"OC0\".\nIf you change L0, you will have a lot of things to update in your tree.",
+      "revId": "5114a4a8115b6a0241923a74d849cdc9d6600a32",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
