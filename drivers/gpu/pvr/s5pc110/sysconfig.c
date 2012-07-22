@@ -1,26 +1,26 @@
 /**********************************************************************
  *
  * Copyright (C) Imagination Technologies Ltd. All rights reserved.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms and conditions of the GNU General Public License,
  * version 2, as published by the Free Software Foundation.
- * 
- * This program is distributed in the hope it will be useful but, except 
- * as otherwise stated in writing, without any warranty; without even the 
- * implied warranty of merchantability or fitness for a particular purpose. 
+ *
+ * This program is distributed in the hope it will be useful but, except
+ * as otherwise stated in writing, without any warranty; without even the
+ * implied warranty of merchantability or fitness for a particular purpose.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St - Fifth Floor, Boston, MA 02110-1301 USA.
- * 
+ *
  * The full GNU General Public License is included in this distribution in
  * the file called "COPYING".
  *
  * Contact Information:
  * Imagination Technologies Ltd. <gpl-support@imgtec.com>
- * Home Park Estate, Kings Langley, Herts, WD4 8LZ, UK 
+ * Home Park Estate, Kings Langley, Herts, WD4 8LZ, UK
  *
 ******************************************************************************/
 
@@ -35,7 +35,12 @@
 #include <linux/regulator/consumer.h>
 #include <linux/clk.h>
 #include <linux/err.h>
+
+#ifdef CONFIG_DVFS_LIMIT
+#include <mach/cpu-freq-v210.h>
+#else
 #include <linux/cpufreq.h>
+#endif
 
 #define REAL_HARDWARE 1
 #define SGX540_BASEADDR 0xf3000000
@@ -77,23 +82,29 @@ static char gszVersionString[] = "SGX540 S5PC110";
 
 IMG_UINT32   PVRSRV_BridgeDispatchKM( IMG_UINT32  Ioctl,
 									IMG_BYTE   *pInBuf,
-									IMG_UINT32  InBufLen, 
+									IMG_UINT32  InBufLen,
 									IMG_BYTE   *pOutBuf,
 									IMG_UINT32  OutBufLen,
 									IMG_UINT32 *pdwBytesTransferred);
 
 #if defined(SUPPORT_ACTIVE_POWER_MANAGEMENT)
+
 /*
  * We need to keep the memory bus speed up when the GPU is active.
- * On the  S5PV210, it is bound to the CPU freq.
+ * On the S5PV210, it is bound to the CPU freq.
  * In arch/arm/mach-s5pv210/cpufreq.c, the bus speed is only lowered when the
  * CPU freq is below 200MHz.
  */
+#ifdef CONFIG_DVFS_LIMIT
+#define MIN_CPU_LVL L3
+#else
 #define MIN_CPU_KHZ_FREQ 200000
+#endif
 
 static struct clk *g3d_clock;
 static struct regulator *g3d_pd_regulator;
 
+#ifndef CONFIG_DVFS_LIMIT
 static int limit_adjust_cpufreq_notifier(struct notifier_block *nb,
 					 unsigned long event, void *data)
 {
@@ -113,12 +124,18 @@ static int limit_adjust_cpufreq_notifier(struct notifier_block *nb,
 static struct notifier_block cpufreq_limit_notifier = {
 	.notifier_call = limit_adjust_cpufreq_notifier,
 };
+#endif
 
 static PVRSRV_ERROR EnableSGXClocks(void)
 {
+#ifdef CONFIG_DVFS_LIMIT
+	s5pv210_lock_dvfs_high_level(DVFS_LOCK_TOKEN_10, MIN_CPU_LVL);
+#endif
 	regulator_enable(g3d_pd_regulator);
 	clk_enable(g3d_clock);
+#ifndef CONFIG_DVFS_LIMIT
 	cpufreq_update_policy(current_thread_info()->cpu);
+#endif
 
 	return PVRSRV_OK;
 }
@@ -127,7 +144,11 @@ static PVRSRV_ERROR DisableSGXClocks(void)
 {
 	clk_disable(g3d_clock);
 	regulator_disable(g3d_pd_regulator);
+#ifdef CONFIG_DVFS_LIMIT
+	s5pv210_unlock_dvfs_high_level(DVFS_LOCK_TOKEN_10);
+#else
 	cpufreq_update_policy(current_thread_info()->cpu);
+#endif
 
 	return PVRSRV_OK;
 }
@@ -143,7 +164,7 @@ static PVRSRV_ERROR DisableSGXClocks(void)
 
  @Input    psSysData - sys data
 
- @Return   PVRSRV_ERROR  : 
+ @Return   PVRSRV_ERROR  :
 
 ******************************************************************************/
 static PVRSRV_ERROR SysLocateDevices(SYS_DATA *psSysData)
@@ -162,9 +183,9 @@ static PVRSRV_ERROR SysLocateDevices(SYS_DATA *psSysData)
 	gsSGXDeviceMap.ui32HPSize = 0;
 #endif
 
-	/* 
+	/*
 		Local Device Memory Region: (not present)
-		Note: the device doesn't need to know about its memory 
+		Note: the device doesn't need to know about its memory
 		but keep info here for now
 	*/
 	gsSGXDeviceMap.sLocalMemSysPBase.uiAddr = 0;
@@ -172,7 +193,7 @@ static PVRSRV_ERROR SysLocateDevices(SYS_DATA *psSysData)
 	gsSGXDeviceMap.sLocalMemCpuPBase.uiAddr = 0;
 	gsSGXDeviceMap.ui32LocalMemSize = 0;
 
-	/* 
+	/*
 		device interrupt IRQ
 		Note: no interrupts available on No HW system
 	*/
@@ -197,10 +218,10 @@ static PVRSRV_ERROR SysLocateDevices(SYS_DATA *psSysData)
 ******************************************************************************
 
  @Function	SysInitialise
- 
+
  @Description Initialises kernel services at 'driver load' time
- 
- @Return   PVRSRV_ERROR  : 
+
+ @Return   PVRSRV_ERROR  :
 
 ******************************************************************************/
 PVRSRV_ERROR SysInitialise(IMG_VOID)
@@ -247,17 +268,17 @@ PVRSRV_ERROR SysInitialise(IMG_VOID)
 
 	gpsSysData->pvSysSpecificData = (IMG_PVOID)&gsSysSpecificData;
 	OSMemSet(&gsSGXDeviceMap, 0, sizeof(SGX_DEVICE_MAP));
-	
+
 	/* Set up timing information*/
 	psTimingInfo = &gsSGXDeviceMap.sTimingInfo;
 	psTimingInfo->ui32CoreClockSpeed = SYS_SGX_CLOCK_SPEED;
-	psTimingInfo->ui32HWRecoveryFreq = SYS_SGX_HWRECOVERY_TIMEOUT_FREQ; 
-	psTimingInfo->ui32ActivePowManLatencyms = SYS_SGX_ACTIVE_POWER_LATENCY_MS; 
-	psTimingInfo->ui32uKernelFreq = SYS_SGX_PDS_TIMER_FREQ; 
+	psTimingInfo->ui32HWRecoveryFreq = SYS_SGX_HWRECOVERY_TIMEOUT_FREQ;
+	psTimingInfo->ui32ActivePowManLatencyms = SYS_SGX_ACTIVE_POWER_LATENCY_MS;
+	psTimingInfo->ui32uKernelFreq = SYS_SGX_PDS_TIMER_FREQ;
 
 #if defined(SUPPORT_ACTIVE_POWER_MANAGEMENT)
 	psTimingInfo->bEnableActivePM = IMG_TRUE;
-#else  
+#else
 	psTimingInfo->bEnableActivePM = IMG_FALSE;
 #endif
 
@@ -283,8 +304,8 @@ PVRSRV_ERROR SysInitialise(IMG_VOID)
 	}
 
 	/*
-		Locate the devices within the system, specifying 
-		the physical addresses of each devices components 
+		Locate the devices within the system, specifying
+		the physical addresses of each devices components
 		(regs, mem, ports etc.)
 	*/
 	eError = SysLocateDevices(gpsSysData);
@@ -296,7 +317,7 @@ PVRSRV_ERROR SysInitialise(IMG_VOID)
 		return eError;
 	}
 
-	/* 
+	/*
 		Register devices with the system
 		This also sets up their memory maps/heaps
 	*/
@@ -312,7 +333,7 @@ PVRSRV_ERROR SysInitialise(IMG_VOID)
 	/*
 		Once all devices are registered, specify the backing store
 		and, if required, customise the memory heap config
-	*/	
+	*/
 	psDeviceNode = gpsSysData->psDeviceNodeList;
 	while(psDeviceNode)
 	{
@@ -350,7 +371,7 @@ PVRSRV_ERROR SysInitialise(IMG_VOID)
 				{
 #if defined(SGX_FEATURE_VARIABLE_MMU_PAGE_SIZE)
 					IMG_CHAR *pStr;
-								
+
 					switch(psDeviceMemoryHeap[i].ui32HeapID)
 					{
 						case HEAP_ID(PVRSRV_DEVICE_TYPE_SGX, SGX_GENERAL_HEAP_ID):
@@ -412,10 +433,10 @@ PVRSRV_ERROR SysInitialise(IMG_VOID)
 						{
 							/* not interested in other heaps */
 							pStr = IMG_NULL;
-							break;	
+							break;
 						}
 					}
-					if (pStr 
+					if (pStr
 					&&	OSReadRegistryDWORDFromString(0,
 														PVRSRV_REGISTRY_ROOT,
 														pStr,
@@ -469,16 +490,16 @@ PVRSRV_ERROR SysInitialise(IMG_VOID)
 ******************************************************************************
 
  @Function	SysFinalise
- 
- @Description Final part of initialisation
- 
 
- @Return   PVRSRV_ERROR  : 
+ @Description Final part of initialisation
+
+
+ @Return   PVRSRV_ERROR  :
 
 ******************************************************************************/
 PVRSRV_ERROR SysFinalise(IMG_VOID)
 {
-	PVRSRV_ERROR eError;    
+	PVRSRV_ERROR eError;
 
 #if defined(SUPPORT_ACTIVE_POWER_MANAGEMENT)
 	eError = EnableSGXClocks();
@@ -531,9 +552,11 @@ PVRSRV_ERROR SysFinalise(IMG_VOID)
 
 #if defined(SUPPORT_ACTIVE_POWER_MANAGEMENT)
 	DisableSGXClocks();
+#ifndef CONFIG_DVFS_LIMIT
 	cpufreq_register_notifier(&cpufreq_limit_notifier,
 				  CPUFREQ_POLICY_NOTIFIER);
-#endif 
+#endif
+#endif
 
 	return PVRSRV_OK;
 }
@@ -546,7 +569,7 @@ PVRSRV_ERROR SysFinalise(IMG_VOID)
 
  @Description De-initialises kernel services at 'driver unload' time
 
- @Return   PVRSRV_ERROR  : 
+ @Return   PVRSRV_ERROR  :
 
 ******************************************************************************/
 PVRSRV_ERROR SysDeinitialise (SYS_DATA *psSysData)
@@ -562,15 +585,19 @@ PVRSRV_ERROR SysDeinitialise (SYS_DATA *psSysData)
 	psSysSpecData = (SYS_SPECIFIC_DATA *) psSysData->pvSysSpecificData;
 
 #if defined(SUPPORT_ACTIVE_POWER_MANAGEMENT)
+#ifdef CONFIG_DVFS_LIMIT
+	s5pv210_unlock_dvfs_high_level(DVFS_LOCK_TOKEN_10);
+#else
 	/* TODO: regulator and clk put. */
 	cpufreq_unregister_notifier(&cpufreq_limit_notifier,
 				    CPUFREQ_POLICY_NOTIFIER);
 	cpufreq_update_policy(current_thread_info()->cpu);
 #endif
+#endif
 
 #if defined(SYS_USING_INTERRUPTS)
 	if (psSysSpecData->ui32SysSpecificData & SYS_SPECIFIC_DATA_ENABLE_LISR)
-	{	
+	{
 		eError = OSUninstallSystemLISR(psSysData);
 		if (eError != PVRSRV_OK)
 		{
@@ -653,17 +680,17 @@ PVRSRV_ERROR SysGetDeviceMemoryMap(PVRSRV_DEVICE_TYPE eDeviceType,
 	FUNCTION:   SysCpuPAddrToDevPAddr
 
 	PURPOSE:    Compute a device physical address from a cpu physical
-	            address. Relevant when 
+	            address. Relevant when
 
 	PARAMETERS:	In:  cpu_paddr - cpu physical address.
-				In:  eDeviceType - device type required if DevPAddr 
-									address spaces vary across devices 
+				In:  eDeviceType - device type required if DevPAddr
+									address spaces vary across devices
 									in the same system
 	RETURNS:	device physical address.
 
 </function>
 ------------------------------------------------------------------------------*/
-IMG_DEV_PHYADDR SysCpuPAddrToDevPAddr (PVRSRV_DEVICE_TYPE eDeviceType, 
+IMG_DEV_PHYADDR SysCpuPAddrToDevPAddr (PVRSRV_DEVICE_TYPE eDeviceType,
 										IMG_CPU_PHYADDR CpuPAddr)
 {
 	IMG_DEV_PHYADDR DevPAddr;
@@ -672,7 +699,7 @@ IMG_DEV_PHYADDR SysCpuPAddrToDevPAddr (PVRSRV_DEVICE_TYPE eDeviceType,
 
 	/* Note: for no HW UMA system we assume DevP == CpuP */
 	DevPAddr.uiAddr = CpuPAddr.uiAddr;
-	
+
 	return DevPAddr;
 }
 
@@ -692,7 +719,7 @@ IMG_CPU_PHYADDR SysSysPAddrToCpuPAddr (IMG_SYS_PHYADDR sys_paddr)
 {
 	IMG_CPU_PHYADDR cpu_paddr;
 
-	/* This would only be an inequality if the CPU's MMU did not point to sys address 0, 
+	/* This would only be an inequality if the CPU's MMU did not point to sys address 0,
 	   ie. multi CPU system */
 	cpu_paddr.uiAddr = sys_paddr.uiAddr;
 	return cpu_paddr;
@@ -714,7 +741,7 @@ IMG_SYS_PHYADDR SysCpuPAddrToSysPAddr (IMG_CPU_PHYADDR cpu_paddr)
 {
 	IMG_SYS_PHYADDR sys_paddr;
 
-	/* This would only be an inequality if the CPU's MMU did not point to sys address 0, 
+	/* This would only be an inequality if the CPU's MMU did not point to sys address 0,
 	   ie. multi CPU system */
 	sys_paddr.uiAddr = cpu_paddr.uiAddr;
 	return sys_paddr;
@@ -729,8 +756,8 @@ IMG_SYS_PHYADDR SysCpuPAddrToSysPAddr (IMG_CPU_PHYADDR cpu_paddr)
 	            address.
 
 	PARAMETERS: In:  SysPAddr - system physical address.
-				In:  eDeviceType - device type required if DevPAddr 
-									address spaces vary across devices 
+				In:  eDeviceType - device type required if DevPAddr
+									address spaces vary across devices
 									in the same system
 
 	RETURNS:    Device physical address.
@@ -758,8 +785,8 @@ IMG_DEV_PHYADDR SysSysPAddrToDevPAddr (PVRSRV_DEVICE_TYPE eDeviceType, IMG_SYS_P
 	            address.
 
 	PARAMETERS: In:  DevPAddr - device physical address.
-				In:  eDeviceType - device type required if DevPAddr 
-									address spaces vary across devices 
+				In:  eDeviceType - device type required if DevPAddr
+									address spaces vary across devices
 									in the same system
 
 	RETURNS:    System physical address.
@@ -813,20 +840,20 @@ IMG_VOID SysRemoveExternalDevice(PVRSRV_DEVICE_NODE *psDeviceNode)
 <function>
 	FUNCTION:   SysGetInterruptSource
 
-	PURPOSE:    Returns System specific information about the device(s) that 
+	PURPOSE:    Returns System specific information about the device(s) that
 				generated the interrupt in the system
 
 	PARAMETERS: In:  psSysData
 				In:  psDeviceNode
 
-	RETURNS:    System specific information indicating which device(s) 
+	RETURNS:    System specific information indicating which device(s)
 				generated the interrupt
 
 </function>
 -----------------------------------------------------------------------------*/
 IMG_UINT32 SysGetInterruptSource(SYS_DATA* psSysData,
 								 PVRSRV_DEVICE_NODE *psDeviceNode)
-{	
+{
 	PVR_UNREFERENCED_PARAMETER(psSysData);
 	PVR_UNREFERENCED_PARAMETER(psDeviceNode);
 
@@ -868,9 +895,9 @@ IMG_VOID SysClearInterrupts(SYS_DATA* psSysData, IMG_UINT32 ui32ClearBits)
 
  @Description	Perform system-level processing required before a power transition
 
- @Input	   eNewPowerState : 
+ @Input	   eNewPowerState :
 
- @Return   PVRSRV_ERROR : 
+ @Return   PVRSRV_ERROR :
 
 ******************************************************************************/
 PVRSRV_ERROR SysSystemPrePowerState(PVRSRV_SYS_POWER_STATE eNewPowerState)
@@ -923,7 +950,7 @@ PVRSRV_ERROR SysDevicePrePowerState(IMG_UINT32			ui32DeviceIndex,
 	{
 		return PVRSRV_OK;
 	}
- 
+
 #if defined(SUPPORT_ACTIVE_POWER_MANAGEMENT)
 	if (eNewPowerState == PVRSRV_DEV_POWER_STATE_OFF)
 	{
@@ -976,7 +1003,7 @@ PVRSRV_ERROR SysDevicePostPowerState(IMG_UINT32			ui32DeviceIndex,
 	}
 #else
 	PVR_UNREFERENCED_PARAMETER(eNewPowerState);
-#endif   
+#endif
 
 	return eError;
 }
@@ -993,7 +1020,7 @@ PVRSRV_ERROR SysDevicePostPowerState(IMG_UINT32			ui32DeviceIndex,
 
  RETURNS	: PVRSRV_ERROR
 *****************************************************************************/
-PVRSRV_ERROR SysOEMFunction(IMG_UINT32	ui32ID, 
+PVRSRV_ERROR SysOEMFunction(IMG_UINT32	ui32ID,
 							IMG_VOID	*pvIn,
 							IMG_UINT32	ulInSize,
 							IMG_VOID	*pvOut,
