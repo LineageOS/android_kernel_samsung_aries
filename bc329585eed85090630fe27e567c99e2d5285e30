@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAVX//+qM\u003d",
+        "filename": "arch/arm/mach-s5pv210/cpufreq.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2012-07-22T08:44:25Z",
+      "side": 1,
+      "message": "What\u0027s with the inside if and outside if? Do we need both of them? Old CM OC patch only has the one outside the if. Do we need to make it Kconfig configurable?",
+      "revId": "bc329585eed85090630fe27e567c99e2d5285e30",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAVX//+qU\u003d",
+        "filename": "drivers/gpu/pvr/s5pc110/sysconfig.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2012-07-22T08:44:25Z",
+      "side": 1,
+      "message": "Please don\u0027t change unrelated lines",
+      "revId": "bc329585eed85090630fe27e567c99e2d5285e30",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAVX//+qQ\u003d",
+        "filename": "kernel/power/main.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2012-07-22T08:44:25Z",
+      "side": 1,
+      "message": "Please don\u0027t change unrelated lines",
+      "revId": "bc329585eed85090630fe27e567c99e2d5285e30",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
