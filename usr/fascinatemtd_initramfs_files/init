@@ -9,7 +9,10 @@ busybox rm init
 busybox mount -t proc proc /proc
 busybox mount -t sysfs sysfs /sys
 
-busybox mount -t ext4 /dev/block/mmcblk0p1 /system
+/lvm/sbin/lvm vgscan --mknodes --ignorelockingfailure
+/lvm/sbin/lvm vgchange -aly --ignorelockingfailure
+
+busybox mount -t ext4 /dev/lvpool/system /system
 busybox mount -t ext4 /dev/block/mmcblk0p2 /cache
 
 image=/stage1/ramdisk.img
