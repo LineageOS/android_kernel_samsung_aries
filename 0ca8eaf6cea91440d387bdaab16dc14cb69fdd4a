@@ -16,6 +16,24 @@
       "revId": "0ca8eaf6cea91440d387bdaab16dc14cb69fdd4a",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAY3///CA\u003d",
+        "filename": "arch/arm/mach-s5pv210/cpufreq.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 2260
+      },
+      "writtenOn": "2012-10-10T03:08:10Z",
+      "side": 1,
+      "message": "Yes.  I think bbelos added this in porting the patch to the 3.0 kernel?",
+      "parentUuid": "AAAAY3///JU\u003d",
+      "revId": "0ca8eaf6cea91440d387bdaab16dc14cb69fdd4a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
