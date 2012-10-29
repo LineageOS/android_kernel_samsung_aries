@@ -16,6 +16,24 @@
       "revId": "3a1d63b3244f155e0bd212cfa5e5381096d35caa",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAaH//89E\u003d",
+        "filename": "arch/arm/mach-s5pv210/cpufreq.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 2248
+      },
+      "writtenOn": "2012-10-29T22:20:05Z",
+      "side": 1,
+      "message": "I tried building with 1350 1275, but I still could not overvolt above 1275 in \"voltage control\"",
+      "parentUuid": "AAAAaH//8/I\u003d",
+      "revId": "3a1d63b3244f155e0bd212cfa5e5381096d35caa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
