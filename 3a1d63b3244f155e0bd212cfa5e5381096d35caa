@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAaH//8/I\u003d",
+        "filename": "arch/arm/mach-s5pv210/cpufreq.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 4855
+      },
+      "writtenOn": "2012-10-29T19:30:03Z",
+      "side": 1,
+      "message": "The stock voltage is actually the max voltage allowed in many OV/UV-apps...",
+      "revId": "3a1d63b3244f155e0bd212cfa5e5381096d35caa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
