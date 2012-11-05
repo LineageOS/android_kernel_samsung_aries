@@ -71,8 +71,9 @@
 #include <mach/cpu-freq-v210.h>
 
 #include <media/ce147_platform.h>
+#ifdef CONFIG_VIDEO_S5KA3DFX
 #include <media/s5ka3dfx_platform.h>
-#include <media/s5k4ecgx.h>
+#endif
 
 #include <plat/regs-serial.h>
 #include <plat/s5pv210.h>
@@ -2353,7 +2354,9 @@ static struct s3c_platform_fimc fimc_plat_lsi = {
 	.default_cam	= CAMERA_PAR_A,
 	.camera		= {
 		&ce147,
+#ifdef CONFIG_VIDEO_S5KA3DFX
 		&s5ka3dfx,
+#endif
 	},
 	.hw_ver		= 0x43,
 };
