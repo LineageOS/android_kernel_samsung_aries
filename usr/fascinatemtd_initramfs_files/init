@@ -58,12 +58,6 @@ busybox rmdir /sdcard
 
 busybox dd bs=512 if=/stage1/boot.bin skip=$load_offset count=$load_len | busybox zcat | busybox cpio -i
 
-if busybox grep -q 1 /sys/class/power_supply/battery/charging_mode_booting ; then
-	# low power mode
-	busybox cp lpm.rc init.rc
-	busybox rm init.aries.rc
-fi
-
 busybox umount /sys
 busybox umount /proc
 busybox date >>boot.txt
