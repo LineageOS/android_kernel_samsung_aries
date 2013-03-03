@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAdn///+s\u003d",
+        "filename": "drivers/usb/gadget/f_mass_storage.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 1931,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2013-03-03T12:24:03Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "f78d90933e823321664bd8083d48fae079666dad",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
