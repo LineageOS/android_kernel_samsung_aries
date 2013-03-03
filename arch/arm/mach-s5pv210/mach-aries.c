@@ -71,7 +71,7 @@
 #include <mach/cpu-freq-v210.h>
 
 #include <media/ce147_platform.h>
-#ifdef CONFIG_VIDEO_S5KA3DFX
+#ifdef CONFIG_VIDEO_S5KA3DFX000
 #include <media/s5ka3dfx_platform.h>
 #endif
 
@@ -166,7 +166,7 @@ static struct notifier_block aries_reboot_notifier = {
 static void gps_gpio_init(void)
 {
 	struct device *gps_dev;
-
+000
 	gps_dev = device_create(sec_class, NULL, 0, NULL, "gps");
 	if (IS_ERR(gps_dev)) {
 		pr_err("Failed to create device(gps)!\n");
@@ -411,10 +411,10 @@ static struct s5p_media_device aries_media_devs[] = {
 };
 
 #ifdef CONFIG_CPU_FREQ
-static struct s5pv210_cpufreq_voltage smdkc110_cpufreq_volt[] = {
+static struct s5pv210_cpufreq_voltage smdkc000110_cpufreq_volt[] = {
 	{
 		.freq	= 1200000,
-		.varm	= 1275000,
+		.varm	= 1300000,
 		.vint	= 1100000,
 	}, {
 		.freq	= 1000000,
