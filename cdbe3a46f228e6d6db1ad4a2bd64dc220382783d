@@ -16,6 +16,24 @@
       "revId": "cdbe3a46f228e6d6db1ad4a2bd64dc220382783d",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAfX//+cg\u003d",
+        "filename": "drivers/misc/tspdrv/Kconfig",
+        "patchSetId": 33
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2013-05-05T10:14:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAfX//+c8\u003d",
+      "revId": "cdbe3a46f228e6d6db1ad4a2bd64dc220382783d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
