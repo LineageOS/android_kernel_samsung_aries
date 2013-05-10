@@ -88,6 +88,7 @@ static struct timer_list progress_timer;
 #define PROGRESS_BAR_WIDTH		4
 #define PROGRESS_BAR_HEIGHT		8
 
+#if 0
 static unsigned char anycall_progress_bar_left[] =
 {
 	0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00,
@@ -111,6 +112,7 @@ static unsigned char anycall_progress_bar_right[] =
 	0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00,
 	0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00
 };
+#endif
 
 static unsigned char anycall_progress_bar_center[] =
 {
@@ -118,6 +120,7 @@ static unsigned char anycall_progress_bar_center[] =
 	0xf3, 0xc5, 0x00, 0x00, 0xf3, 0xc5, 0x00, 0x00, 0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00
 };
 
+#if 0
 static unsigned char anycall_progress_bar[] =
 {
 	0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00,
@@ -129,6 +132,7 @@ static unsigned char anycall_progress_bar[] =
 	0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00,
 	0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00, 0x33, 0x33, 0x33, 0x00
 };
+#endif
 
 static void s3cfb_start_progress(struct fb_info *fb);
 static void s3cfb_stop_progress(void);
@@ -276,6 +280,7 @@ static int s3cfb_map_video_memory(struct fb_info *fb)
 	return 0;
 }
 
+#if 0
 static int s3cfb_map_default_video_memory(struct fb_info *fb)
 {
 #if defined(CONFIG_FB_S3C_VIRTUAL)
@@ -304,6 +309,7 @@ static int s3cfb_map_default_video_memory(struct fb_info *fb)
 #endif
 	return 0;
 }
+#endif
 
 static int s3cfb_unmap_video_memory(struct fb_info *fb)
 {
@@ -676,6 +682,7 @@ static int s3cfb_ioctl(struct fb_info *fb, unsigned int cmd, unsigned long arg)
 	struct s3cfb_next_info next_fb_info;
 
 	int ret = 0;
+	long int ret_copy;
 
 	union {
 		struct s3cfb_user_window user_window;
@@ -694,7 +701,7 @@ static int s3cfb_ioctl(struct fb_info *fb, unsigned int cmd, unsigned long arg)
 		ret = s3cfb_wait_for_vsync(fbdev);
 		if(ret > 0) {
 			u64 nsecs = ktime_to_ns(fbdev->vsync_timestamp);
-			copy_to_user((void*)arg, &nsecs, sizeof(u64));
+			ret_copy = copy_to_user((void*)arg, &nsecs, sizeof(u64));
 		}
 		break;
 
@@ -1485,13 +1492,15 @@ static void __exit s3cfb_unregister(void)
 	platform_driver_unregister(&s3cfb_driver);
 }
 
+/*
 #ifdef DISPLAY_BOOT_PROGRESS
 static void __init bootmode(char **p)
 {
 	show_progress = simple_strtoul(*p, p, 10);
 }
-//__early_param("bootmode=", bootmode);
+__early_param("bootmode=", bootmode);
 #endif
+*/
 
 module_init(s3cfb_register);
 module_exit(s3cfb_unregister);

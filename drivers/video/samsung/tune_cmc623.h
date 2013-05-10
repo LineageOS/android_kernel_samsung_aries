@@ -71,6 +71,7 @@ typedef struct
 }Cmc623RegisterSet;
 #endif
 
+#if 0
 static Cmc623RegisterSet Cmc623_InitSeq[] =
 {
     /* select SFR Bank0 */
@@ -125,6 +126,7 @@ static Cmc623RegisterSet Cmc623_InitSeq[] =
     {CMC623_REG_SWRESET, 0xffff},  // !SW reset, (!note: sleep required after this)
     {CMC623_REG_RGBIFEN, 0x0001},  // enable RGB IF
 };
+#endif
 
 typedef enum
 {
@@ -140,7 +142,7 @@ typedef enum
 }Lcd_CMC623_UI_mode;
 
 extern int tune_cmc623_suspend(void);
-extern int tune_cmc623_pre_resume();
+extern int tune_cmc623_pre_resume(void);
 extern int tune_cmc623_resume(void);
 extern void tune_cmc623_set_lcddata(const struct s3cfb_lcd *);
 extern void tune_cmc623_set_lcd_pclk(int pclk);

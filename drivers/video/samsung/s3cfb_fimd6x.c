@@ -618,7 +618,7 @@ int s3cfb_set_buffer_address(struct s3cfb_global *ctrl, int id)
 	return 0;
 }
 
-int s3cfb_set_alpha_value_width(struct s3cfb_global *ctrl, int id)
+void s3cfb_set_alpha_value_width(struct s3cfb_global *ctrl, int id)
 {
        struct fb_info *fb = ctrl->fb[id];
        struct fb_var_screeninfo *var = &fb->var;

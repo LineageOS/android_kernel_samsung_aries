@@ -284,13 +284,14 @@ static void cmc623_pwm_send_intensity(struct backlight_device *bd)
 	current_intensity = intensity;
 }
 
-static void cmc623_pwm_gpio_init()
+static void cmc623_pwm_gpio_init(void)
 {
 //	s3c_gpio_cfgpin(GPIO_LCD_CABC_PWM_R05, S3C_GPIO_SFN(3));	//mdnie pwm
 //    s3c_gpio_setpull(GPIO_LCD_CABC_PWM_R05, S3C_GPIO_PULL_NONE);
 }
 
 #ifdef CONFIG_PM
+#if 0
 static int cmc623_pwm_suspend(struct platform_device *swi_dev, pm_message_t state)
 {
 	struct backlight_device *bd = platform_get_drvdata(swi_dev);
@@ -311,6 +312,7 @@ static int cmc623_pwm_resume(struct platform_device *swi_dev)
 
 	return 0;
 }
+#endif
 #else
 #define cmc623_pwm_suspend		NULL
 #define cmc623_pwm_resume		NULL
@@ -475,8 +477,8 @@ static struct platform_driver cmc623_pwm_driver = {
 	.probe		= cmc623_pwm_probe,
 	.remove		= cmc623_pwm_remove,
 #if !(defined CONFIG_HAS_EARLYSUSPEND)
-	.suspend	= cmc623_pwm_suspend,
-	.resume		= cmc623_pwm_resume,
+	//.suspend	= cmc623_pwm_suspend,
+	//.resume		= cmc623_pwm_resume,
 #endif
 };
 

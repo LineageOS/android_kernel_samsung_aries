@@ -317,7 +317,7 @@ static void cmc623_Color_Saturation_Change(int value, int finalize)
 static int cmc623_OutDoor_Enable(int enable);
 
 static mDNIe_data_type* current_cmc623_mode = 0;
-static void cmc623_Mode_Change_Compare(mDNIe_data_type *mode, int cabc_enable);
+//static void cmc623_Mode_Change_Compare(mDNIe_data_type *mode, int cabc_enable);
 static void cmc623_Mode_Change(mDNIe_data_type *mode, int cabc_enable)
 {
 	int check;
@@ -355,7 +355,7 @@ static void cmc623_Mode_Change(mDNIe_data_type *mode, int cabc_enable)
 	while ( mode->addr != END_SEQ)
 	{
 		cmc623_I2cWrite16(mode->addr, mode->data);
-		dprintk(KERN_INFO "[cmc623] a(0x%x),d(0x%x)\n",mode->addr, mode->data);
+		//dprintk(KERN_INFO "[cmc623] a(0x%x),d(0x%x)\n",mode->addr, mode->data);
 		mode++;
 	}
 
@@ -395,6 +395,7 @@ static void cmc623_Mode_Change(mDNIe_data_type *mode, int cabc_enable)
 	}
 }
 
+#if 0
 static void cmc623_Mode_Change_Compare(mDNIe_data_type *mode, int cabc_enable)
 {
 	int c = 0;
@@ -421,7 +422,7 @@ static void cmc623_Mode_Change_Compare(mDNIe_data_type *mode, int cabc_enable)
 		while ( mode->addr != END_SEQ)
 		{
 			cmc623_I2cWrite16(mode->addr, mode->data);
-			dprintk(KERN_INFO "[cmc623] a(0x%x),d(0x%x)\n",mode->addr, mode->data);
+			//dprintk(KERN_INFO "[cmc623] a(0x%x),d(0x%x)\n",mode->addr, mode->data);
 			mode++;
 		}
 	}
@@ -435,7 +436,7 @@ static void cmc623_Mode_Change_Compare(mDNIe_data_type *mode, int cabc_enable)
 			if(mode->addr == 0x0000)
 			{
 				//cmc623_I2cWrite16(mode->addr, mode->data);
-				dprintk(KERN_INFO "[cmc623] a(0x%x),d(0x%x)\n",mode->addr, mode->data);
+				//dprintk(KERN_INFO "[cmc623] a(0x%x),d(0x%x)\n",mode->addr, mode->data);
 				//printk("[cmc6233333] a(0x%x),d(0x%x)\n",mode->addr, mode->data);
 				mode++;
 
@@ -458,7 +459,7 @@ static void cmc623_Mode_Change_Compare(mDNIe_data_type *mode, int cabc_enable)
 				if(mode->data != cmode->data)
 				{
 					//cmc623_I2cWrite16(mode->addr, mode->data);
-					dprintk(KERN_INFO "[cmc623] a(0x%x),d(0x%x)\n",mode->addr, mode->data);
+					//dprintk(KERN_INFO "[cmc623] a(0x%x),d(0x%x)\n",mode->addr, mode->data);
 					printk("[cmc6233333] a(0x%x),d(0x%x)\n",mode->addr, mode->data);
 				}
 
@@ -470,7 +471,7 @@ static void cmc623_Mode_Change_Compare(mDNIe_data_type *mode, int cabc_enable)
 				if(mode->addr < cmode->addr)
 				{
 					//cmc623_I2cWrite16(mode->addr, mode->data);
-					dprintk(KERN_INFO "[cmc623] a(0x%x),d(0x%x)\n",mode->addr, mode->data);
+					//dprintk(KERN_INFO "[cmc623] a(0x%x),d(0x%x)\n",mode->addr, mode->data);
 					printk("[cmc6233333] a(0x%x),d(0x%x)\n",mode->addr, mode->data);
 
 					mode++;
@@ -517,6 +518,7 @@ static void cmc623_Mode_Change_Compare(mDNIe_data_type *mode, int cabc_enable)
 		cmc623_reg_unmask();
 	}
 }
+#endif
 
 static void cmc623_Set_Mode(Lcd_CMC623_UI_mode mode, int cmc623_CABC_OnOff)
 {
@@ -656,7 +658,7 @@ void cmc623_Set_Mode_Ext(Lcd_CMC623_UI_mode mode, u8 mDNIe_Outdoor_OnOff)
 	}
 	mutex_unlock(&cmc623_state_transaction_lock);
 
-	dprintk("[cmc623] cmc623_Set_Mode_Ext: current_cmc623_UI(%d), current_cmc623_OutDoor_OnOff(%d)  \n",current_cmc623_UI, current_cmc623_OutDoor_OnOff);
+	//dprintk("[cmc623] cmc623_Set_Mode_Ext: current_cmc623_UI(%d), current_cmc623_OutDoor_OnOff(%d)  \n",current_cmc623_UI, current_cmc623_OutDoor_OnOff);
 }
 EXPORT_SYMBOL(cmc623_Set_Mode_Ext);
 
@@ -715,7 +717,7 @@ static bool cmc623_I2cWrite16( unsigned char Addr, unsigned long Data)
 
 	if(TRUE == cmc623_state.suspended)
 		{
-        printk("cmc623 don't need writing while LCD off(a:%x,d:%x)\n", Addr, Data);
+        //printk("cmc623 don't need writing while LCD off(a:%x,d:%x)\n", Addr, Data);
         return 0;
 		}
 
@@ -1065,7 +1067,7 @@ EXPORT_SYMBOL(CMC623_tuning_load_from_file);
 
 #endif	//CMC623_TUNING
 
-
+#if 0
 static int cmc623_tuning_set (void)  // P1_LSJ DE19
 {
     int ret = 0;
@@ -1177,6 +1179,7 @@ static int cmc623_tuning_set (void)  // P1_LSJ DE19
 
 	return ret;
 }
+#endif
 
 static int cmc623_initial_set (void)  // P1_LSJ DE19
 {
@@ -1276,6 +1279,7 @@ static int cmc623_initial_set (void)  // P1_LSJ DE19
 	return ret;
 }
 
+#if 0
 static void cmc623_set_tuning (void)
 {
 
@@ -1401,6 +1405,7 @@ static void cmc623_set_tuning (void)
 
 #endif
 }
+#endif
 
 // value: 0 ~ 100
 static void cmc623_cabc_pwm_brightness_reg(int value)
@@ -1447,8 +1452,6 @@ static void cmc623_cabc_pwm_brightness_reg(int value)
 // value: 0 ~ 100
 static void cmc623_cabc_pwm_brightness(int value)
 {
-	u32 reg;
-
 	if(!p_cmc623_data)
 		{
 		printk(KERN_ERR "%s cmc623 is not initialized\n", __func__);
@@ -1515,7 +1518,7 @@ static void cmc623_manual_pwm_brightness(int value)
 }
 
 u16 ove_target_value=0;
-static void ove_workqueue_func(void* data)
+static void ove_workqueue_func(struct work_struct *work)
 {
 	int i = 0;
 	for(i=0; i<=8; ++i)
@@ -1538,7 +1541,6 @@ static void ove_workqueue_func(void* data)
 static int cmc623_OutDoor_Enable(int enable)
 {
 	u16 i2cdata=0;
-	int i=0;
 
 	if(enable)
 	{
@@ -1660,7 +1662,8 @@ void tune_cmc623_pwm_brightness(int value)
 }
 EXPORT_SYMBOL(tune_cmc623_pwm_brightness);
 
-static int tune_cmc623_hw_rst()
+#if 0
+static int tune_cmc623_hw_rst(void)
 {
     if (gpio_is_valid(GPIO_CMC_BYPASS))
     {
@@ -1682,8 +1685,9 @@ static int tune_cmc623_hw_rst()
 
 	return 0;
 }
+#endif
 
-int tune_cmc623_suspend()
+int tune_cmc623_suspend(void)
 {
 	printk(KERN_INFO "%s called\n", __func__);
 
@@ -1799,7 +1803,7 @@ int tune_cmc623_resume()
 	cmc623_initial_set();
 
 #ifdef CMC623_TUNING
-	cmc623_set_tuning();	//for test
+	//cmc623_set_tuning();	//for test
 #endif
 
 	// restore mode & cabc status
@@ -2159,7 +2163,7 @@ static int cmc623_i2c_probe(struct i2c_client *client, const struct i2c_device_i
 	//cmc623_tuning_set();
 //	cmc623_initial_set();
 #ifdef CMC623_TUNING
-	cmc623_set_tuning();	//for test
+	//cmc623_set_tuning();	//for test
 #endif
 	cmc623_cabc_enable_flag(cmc623_state.cabc_enabled, TRUE, TRUE);
 
