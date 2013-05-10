@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAfn//+QU\u003d",
+        "filename": "drivers/video/samsung/s3cfb.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2013-05-10T20:23:19Z",
+      "side": 1,
+      "message": "typo?",
+      "revId": "71dd27417588c53805d286582e0931d7796b9957",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
