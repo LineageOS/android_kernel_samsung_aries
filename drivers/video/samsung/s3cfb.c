@@ -39,8 +39,6 @@
 #include <linux/suspend.h>
 #endif
 #ifdef CONFIG_MACH_P1
-#include <linux/mfd/max8998.h>
-#include <linux/sec_battery.h>
 #include <mach/gpio.h>
 #include <mach/gpio-p1.h>
 #include "logo_rgb24_wvga_portrait_p1.h"
@@ -182,7 +180,11 @@ static int s3cfb_draw_logo(struct fb_info *fb)
 	}
 #endif
 	if (readl(S5P_INFORM5)) //LPM_CHARGING mode
+#ifdef CONFIG_FB_S3C_LVDS
+		printk(KERN_INFO "[LVDS] lmp charging mode\n");
+#else
 		memcpy(fb->screen_base, charging, fb->var.yres * fb->fix.line_length);
+#endif
 	else
 		memcpy(fb->screen_base, LOGO_RGB24, fb->var.yres * fb->fix.line_length);
 	return 0;
@@ -1244,7 +1246,7 @@ static int __devinit s3cfb_probe(struct platform_device *pdev)
 	dev_info(fbdev->dev, "registered successfully\n");
 
 #ifdef DISPLAY_BOOT_PROGRESS
-	if(!get_boot_charger_info() && show_progress == 1)
+	if(!readl(S5P_INFORM5) && show_progress == 1)
 		s3cfb_start_progress(fbdev->fb[pdata->default_win]);
 #endif
 
