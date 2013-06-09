@@ -2331,10 +2331,15 @@ geomagnetic_enable_store(struct device *dev,
 		hwdep_driver.set_enable(value);
 		geomagnetic_enable(data);
 	} else {
+#ifdef CONFIG_SAMSUNG_GALAXYS4G
+		geomagnetic_disable(data);
+		hwdep_driver.set_enable(value);
+#else
 		atomic_set(&data->disabling, 1);
 		geomagnetic_disable(data);
 		atomic_set(&data->disabling, 0);
 		hwdep_driver.set_enable(value);
+#endif
 	}
 
 	geomagnetic_multi_unlock();
@@ -2795,12 +2800,18 @@ geomagnetic_input_work_func(struct work_struct *work)
 
 			hwdep_driver.ioctl(YAS529_IOC_GET_DRIVER_STATE,
 				(unsigned long) &state);
-
+				
+#ifdef CONFIG_SAMSUNG_GALAXYS4GMTD
+			geomagnetic_multi_lock();
+			data->driver_state = state;
+			geomagnetic_multi_unlock();
+#else
 			// Don't lock if disabling as a lock is already held outside
 			// and locking again will cause a deadlock.
 			if (!atomic_read(&data->disabling)) geomagnetic_multi_lock();
 			data->driver_state = state;
 			if (!atomic_read(&data->disabling)) geomagnetic_multi_unlock();
+#endif
 
 			/* report event */
 			code |= (rt & YAS529_REPORT_OVERFLOW_OCCURED);
@@ -2940,6 +2951,19 @@ geomagnetic_probe(struct i2c_client *client, const struct i2c_device_id *id)
 		rt = -ENOMEM;
 		goto err;
 	}
+#ifdef CONFIG_SAMSUNG_GALAXYS4G
+data->threshold = YAS529_DEFAULT_THRESHOLD;
+	for (i = 0; i < 3; i++)
+		data->distortion[i] = YAS529_DEFAULT_DISTORTION;
+	data->shape = YAS529_DEFAULT_SHAPE;
+	atomic_set(&data->enable, 0);
+	for (i = 0; i < 3; i++)
+		atomic_set(&data->last_data[i], 0);
+	atomic_set(&data->last_status, 0);
+	INIT_DELAYED_WORK(&data->work, geomagnetic_input_work_func);
+	sema_init(&data->driver_lock, 1);
+	sema_init(&data->multi_lock, 1);
+#else
 	data->threshold = YAS529_DEFAULT_THRESHOLD;
 	for (i = 0; i < 3; i++)
 		data->distortion[i] = YAS529_DEFAULT_DISTORTION;
@@ -2952,6 +2976,7 @@ geomagnetic_probe(struct i2c_client *client, const struct i2c_device_id *id)
 	INIT_DELAYED_WORK(&data->work, geomagnetic_input_work_func);
 	sema_init(&data->driver_lock, 1);
 	sema_init(&data->multi_lock, 1);
+#endif
 
 	input_data = input_allocate_device();
 	if (input_data == NULL) {
