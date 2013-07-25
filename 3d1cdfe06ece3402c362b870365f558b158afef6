@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3acd31a7_c8e63fe8",
+        "filename": "arch/arm/mach-s5pv210/setup-sdhci-gpio.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2013-07-25T21:09:52Z",
+      "side": 1,
+      "message": "One too many new line",
+      "revId": "3d1cdfe06ece3402c362b870365f558b158afef6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_a8eb03b0",
+        "filename": "arch/arm/mach-s5pv210/setup-sdhci-gpio.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2013-07-25T21:09:52Z",
+      "side": 1,
+      "message": "I don\u0027t think we need a variable for this. S5PV210_GPJ1(1) is a define which evaluates to a constant.",
+      "revId": "3d1cdfe06ece3402c362b870365f558b158afef6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_88d167fe",
+        "filename": "arch/arm/mach-s5pv210/setup-sdhci.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2013-07-25T21:09:52Z",
+      "side": 1,
+      "message": "Please, no hidden cleanup.",
+      "revId": "3d1cdfe06ece3402c362b870365f558b158afef6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_48db4f1c",
+        "filename": "usr/p1c_initramfs_files/init",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2013-07-25T21:09:52Z",
+      "side": 1,
+      "message": "spacing",
+      "revId": "3d1cdfe06ece3402c362b870365f558b158afef6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
