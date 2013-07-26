@@ -16,6 +16,24 @@
       "revId": "76a94128641b3e7699c4de492cf9127d5dbd2898",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_082b17ed",
+        "filename": "drivers/mmc/host/sdhci.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 2751
+      },
+      "writtenOn": "2013-07-26T00:38:22Z",
+      "side": 0,
+      "message": "I\u0027ve just removed gcc warnings.\nBut, I will bring it back.",
+      "parentUuid": "3acd31a7_68ce0b5c",
+      "revId": "76a94128641b3e7699c4de492cf9127d5dbd2898",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
