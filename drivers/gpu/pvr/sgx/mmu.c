@@ -1113,6 +1113,7 @@ _DeferredAllocPagetables(MMU_HEAP *pMMUHeap, IMG_DEV_VIRTADDR DevVAddr, IMG_UINT
 		if(ppsPTInfoList[i]->hPTPageOSMemHandle == IMG_NULL
 		&& ppsPTInfoList[i]->PTPageCpuVAddr == IMG_NULL)
 		{
+#pragma GCC diagnostic warning "-Wmaybe-uninitialized"
 			IMG_DEV_PHYADDR	sDevPAddr;
 #if defined(SUPPORT_SGX_MMU_DUMMY_PAGE)
 			IMG_UINT32 *pui32Tmp;
