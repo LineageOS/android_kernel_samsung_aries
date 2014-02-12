@@ -729,7 +729,7 @@ static int __devinit tl2796_probe(struct spi_device *spi)
 {
 	struct s5p_lcd *lcd;
 	int ret;
-	int c, i;
+	int c;
 
 	lcd = kzalloc(sizeof(struct s5p_lcd), GFP_KERNEL);
 	if (!lcd) {
@@ -751,9 +751,6 @@ static int __devinit tl2796_probe(struct spi_device *spi)
 	lcd->bl = 255;
 	for (c = 0; c < 3; c++)
 		lcd->color_mult[c] = 0xffffffff;
-	for (c = 0; c < 3; c++)
-		for (i = 0; i < 6; i++)
-			lcd->gamma_reg_offsets.v[c][i] = 0;
 
 	if (!spi->dev.platform_data) {
 		dev_err(lcd->dev, "failed to get platform data\n");
@@ -777,9 +774,7 @@ static int __devinit tl2796_probe(struct spi_device *spi)
 #endif
 
 	spi_set_drvdata(spi, lcd);
-#ifndef CONFIG_MACH_ARIES
 	tl2796_read_mtp_info(lcd);
-#endif
 
 	lcd->bl_dev = backlight_device_register("s5p_bl",
 			&spi->dev, lcd, &s5p_bl_ops, NULL);
