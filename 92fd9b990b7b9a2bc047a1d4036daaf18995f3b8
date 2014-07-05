@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba0121b8_f1f103cf",
+        "filename": "arch/arm/kernel/setup.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-05T01:06:55Z",
+      "side": 1,
+      "message": "#if should not be indented to reflect the fact that the preprocessor parses it without caring about the content of the code",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba0121b8_51b9cfe8",
+        "filename": "arch/arm/mach-s5pv210/aries-panel-ypg1.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-05T01:06:55Z",
+      "side": 1,
+      "message": "inconsistent spacing",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba0121b8_11bf57d1",
+        "filename": "arch/arm/mach-s5pv210/aries-panel-ypg1.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-05T01:06:55Z",
+      "side": 1,
+      "message": "inconsistent spacing",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba0121b8_b1ce6b81",
+        "filename": "arch/arm/mach-s5pv210/mach-aries-ypg1.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-05T01:06:55Z",
+      "side": 1,
+      "message": "Wrong file name",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba0121b8_31889b22",
+        "filename": "drivers/video/samsung/s3cfb_mdnie.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-05T01:06:55Z",
+      "side": 1,
+      "message": "Maybe we can use\n\n#if defined(...)\n\n#elif defined(...)\n\n#elif defined(...)\n\n#endif",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba0121b8_118d9731",
+        "filename": "include/linux/mfd/wm8994/wm8994_pdata.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-05T01:06:55Z",
+      "side": 1,
+      "message": "Missing ifdef?",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba0121b8_f176233d",
+        "filename": "sound/soc/codecs/wm8994_herring.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-05T01:06:55Z",
+      "side": 1,
+      "message": "Is the lack of ifdef around this file intentional?",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba0121b8_71821302",
+        "filename": "sound/soc/codecs/wm8994_herring.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 4932,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-05T01:06:55Z",
+      "side": 1,
+      "message": "Fix spacing",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba0121b8_51870f0f",
+        "filename": "sound/soc/codecs/wm8994_herring.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 4939,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-05T01:06:55Z",
+      "side": 1,
+      "message": "You\u0027re changing the behavior for other devices here",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba0121b8_b17cab21",
+        "filename": "sound/soc/codecs/wm8994_herring.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 5016,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-05T01:06:55Z",
+      "side": 1,
+      "message": "spacing",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba0121b8_9179a732",
+        "filename": "sound/soc/codecs/wm8994_herring.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 5022,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-05T01:06:55Z",
+      "side": 1,
+      "message": "Again, changing behavior for other devices.",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba0121b8_d1731f4c",
+        "filename": "sound/soc/codecs/wm8994_samsung.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-05T01:06:55Z",
+      "side": 1,
+      "message": "Missing ifdef? AFAIK, other platforms wouldn\u0027t have this.",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
