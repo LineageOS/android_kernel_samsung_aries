@@ -203,6 +203,24 @@
       "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a061dce_346ee9c9",
+        "filename": "sound/soc/codecs/wm8994_samsung.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 8040
+      },
+      "writtenOn": "2014-07-19T05:16:05Z",
+      "side": 1,
+      "message": "Other aries devices do not have this but I doubt it will seriously affect them because it is a platform data that only affect the said device. (in this case the YP-G1) As the other devices don\u0027t have the platform data, it will most likely return always false as they don\u0027t have the ear_path value unless I\u0027ve missed something that I didn\u0027t understood well.",
+      "parentUuid": "ba0121b8_d1731f4c",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
