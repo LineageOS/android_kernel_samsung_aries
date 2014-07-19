@@ -221,6 +221,58 @@
       "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a061dce_cf3b989b",
+        "filename": "sound/soc/codecs/wm8994_samsung.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-19T11:42:16Z",
+      "side": 1,
+      "message": "The issue is precisely because they don\u0027t have the pdata.\n\nAny call to set_ear_path will immediately crash the kernel with a null pointer exception. Actually, the driver won\u0027t initialize at all because of the check for the presence of it (see the other comment).",
+      "parentUuid": "9a061dce_346ee9c9",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a061dce_ef365cb3",
+        "filename": "sound/soc/codecs/wm8994_samsung.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-19T11:42:16Z",
+      "side": 1,
+      "message": "also watch the spacing (tab vs spaces)",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a061dce_2f41740c",
+        "filename": "sound/soc/codecs/wm8994_samsung.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 3188,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-19T11:42:16Z",
+      "side": 1,
+      "message": "all other platform will enter this code path because of the lack of set_ear_path. You\u0027d either have to ifdef it, or implement a dummy one for all other platforms. (The latter is probably cleaner.)",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
