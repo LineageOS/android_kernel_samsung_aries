@@ -242,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "9a061dce_af5584c7",
+        "filename": "sound/soc/codecs/wm8994_samsung.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 8040
+      },
+      "writtenOn": "2014-07-19T12:08:33Z",
+      "side": 1,
+      "message": "Ahh I see thanks for the explaination, still trying to understand more and more stuff. Well I\u0027ll proceed with the necessary modifications then.",
+      "parentUuid": "9a061dce_cf3b989b",
+      "revId": "92fd9b990b7b9a2bc047a1d4036daaf18995f3b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a061dce_ef365cb3",
         "filename": "sound/soc/codecs/wm8994_samsung.c",
         "patchSetId": 2
