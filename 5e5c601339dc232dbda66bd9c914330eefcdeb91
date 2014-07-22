@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a061dce_cc4ba158",
+        "filename": "drivers/video/samsung/s3cfb_mdnie.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-22T20:18:24Z",
+      "side": 1,
+      "message": "This should be CONFIG_MACH_ARIES not CONFIG_SAMSUNG_ARIES",
+      "revId": "5e5c601339dc232dbda66bd9c914330eefcdeb91",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a061dce_6c37f5e3",
         "filename": "include/linux/nt35580.h",
         "patchSetId": 4
@@ -36,6 +53,57 @@
     },
     {
       "key": {
+        "uuid": "9a061dce_ac5f4d0d",
+        "filename": "sound/soc/codecs/wm8994_herring.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-22T20:18:24Z",
+      "side": 1,
+      "message": "If you\u0027re adding entires to the gain table, you also need to modify PLAYBACK_GAIN_NUM, FMRADIO_GAIN_NUM, etc. in wm8994_samsung.h\n\n../../../../../../kernel/samsung/aries/sound/soc/codecs/wm8994_herring.c:746:2: warning: excess elements in array initializer [enabled by default]\n\n../../../../../../kernel/samsung/aries/sound/soc/codecs/wm8994_herring.c:746:2: warning: (near initialization for \u0027playback_gain_table\u0027) [enabled by default]",
+      "revId": "5e5c601339dc232dbda66bd9c914330eefcdeb91",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a061dce_2c733db3",
+        "filename": "sound/soc/codecs/wm8994_herring.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-22T20:18:24Z",
+      "side": 1,
+      "message": "Need #ifdef, otherwise set_ear_path undefined error will appear",
+      "revId": "5e5c601339dc232dbda66bd9c914330eefcdeb91",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a061dce_8c6889bc",
+        "filename": "sound/soc/codecs/wm8994_herring.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 1650,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-22T20:18:24Z",
+      "side": 1,
+      "message": "spacing \u0026 ifdef",
+      "revId": "5e5c601339dc232dbda66bd9c914330eefcdeb91",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a061dce_cc3441e0",
         "filename": "sound/soc/codecs/wm8994_herring.c",
         "patchSetId": 4
@@ -47,6 +115,40 @@
       "writtenOn": "2014-07-22T19:26:27Z",
       "side": 1,
       "message": "spacing",
+      "revId": "5e5c601339dc232dbda66bd9c914330eefcdeb91",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a061dce_6c6535e0",
+        "filename": "sound/soc/codecs/wm8994_herring.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 3027,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-22T20:18:24Z",
+      "side": 1,
+      "message": "spacing \u0026 ifdef",
+      "revId": "5e5c601339dc232dbda66bd9c914330eefcdeb91",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a061dce_cc6281d8",
+        "filename": "sound/soc/codecs/wm8994_herring.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 3201,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-22T20:18:24Z",
+      "side": 1,
+      "message": "spacing \u0026 ifdef",
       "revId": "5e5c601339dc232dbda66bd9c914330eefcdeb91",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
