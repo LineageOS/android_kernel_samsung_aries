@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a061dce_a9557f1e",
+        "filename": "sound/soc/codecs/wm8994_herring.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 5017,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-22T17:21:52Z",
+      "side": 1,
+      "message": "spacing",
+      "revId": "5e5c601339dc232dbda66bd9c914330eefcdeb91",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a061dce_09310b0c",
+        "filename": "sound/soc/codecs/wm8994_samsung.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-22T17:21:52Z",
+      "side": 1,
+      "message": "spacing",
+      "revId": "5e5c601339dc232dbda66bd9c914330eefcdeb91",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
