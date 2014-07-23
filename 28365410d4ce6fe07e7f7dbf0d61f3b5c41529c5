@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a061dce_8f3a3bcc",
+        "filename": "drivers/video/samsung/s3cfb_mdnie.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-23T14:32:38Z",
+      "side": 1,
+      "message": "Please rename to \"mDNIe_VT_MODE\" for consistency if possible.",
+      "revId": "28365410d4ce6fe07e7f7dbf0d61f3b5c41529c5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a061dce_af31ffee",
+        "filename": "sound/soc/codecs/wm8994_samsung.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-23T14:32:38Z",
+      "side": 1,
+      "message": "if( -\u003e if (",
+      "revId": "28365410d4ce6fe07e7f7dbf0d61f3b5c41529c5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a061dce_0f4d8b72",
+        "filename": "sound/soc/codecs/wm8994_samsung.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-23T14:32:38Z",
+      "side": 1,
+      "message": "spacing",
+      "revId": "28365410d4ce6fe07e7f7dbf0d61f3b5c41529c5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a061dce_4f578302",
+        "filename": "sound/soc/codecs/wm8994_samsung.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-23T14:32:38Z",
+      "side": 1,
+      "message": "spacing",
+      "revId": "28365410d4ce6fe07e7f7dbf0d61f3b5c41529c5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a061dce_2f5ccf24",
+        "filename": "sound/soc/codecs/wm8994_samsung.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2014-07-23T14:32:38Z",
+      "side": 1,
+      "message": "spacing",
+      "revId": "28365410d4ce6fe07e7f7dbf0d61f3b5c41529c5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
